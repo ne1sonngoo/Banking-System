@@ -1,135 +1,86 @@
+#include "Bank.h"
 #include <iostream>
-#include <unordered_map>
-#include "Account.h"
 
 int main()
 {
-    std::unordered_map<std::string, Account> accounts;
+    Bank bank;
+    bank.loadFromFile();
 
     while (true)
     {
-        std::cout << "\n=== Banking System ===\n";
-        std::cout << "1. Create Account\n";
-        std::cout << "2. Deposit\n";
-        std::cout << "3. Withdraw\n";
-        std::cout << "4. Display Account\n";
-        std::cout << "5. Show Transactions\n";
-        std::cout << "6. Exit\n";
-        std::cout << "Choose option: ";
-
+        std::cout << "\n1. Create Account\n2. Login\n3. Exit\nChoice: ";
         int choice;
         std::cin >> choice;
 
         if (choice == 1)
         {
-            std::string accNum, name;
-            double balance;
-
-            std::cout << "Enter account number: ";
-            std::cin >> accNum;
-
-            if (accounts.find(accNum) != accounts.end())
-            {
-                std::cout << "Account already exists!\n";
-                continue;
-            }
-
-            std::cin.ignore();
-            std::cout << "Enter account name: ";
-            std::getline(std::cin, name);
-
-            std::cout << "Enter initial balance: ";
-            std::cin >> balance;
-
-            accounts.emplace(accNum, Account(accNum, name, balance));
-            std::cout << "Account created successfully!\n";
+            bank.createAccount();
         }
-
         else if (choice == 2)
         {
-            std::string accNum;
-            double amount;
-
-            std::cout << "Enter account number: ";
+            int accNum, pin;
+            std::cout << "Account Number: ";
             std::cin >> accNum;
+            std::cout << "PIN: ";
+            std::cin >> pin;
 
-            auto it = accounts.find(accNum);
-            if (it != accounts.end())
+            Account *acc = bank.authenticate(accNum, pin);
+
+            if (!acc)
             {
-                std::cout << "Enter deposit amount: ";
-                std::cin >> amount;
-                it->second.deposit(amount);
+                std::cout << "Invalid credentials\n";
+                continue;
             }
-            else
+            std::cout << "\nWelcome, Account #" << acc->getAccountNumber() << "!\n";
+            while (true)
             {
-                std::cout << "Account not found!\n";
-            }
-        }
+                std::cout << "\n1. Deposit\n2. Withdraw\n3. Balance\n4. Transactions\n5. Clear Transactions\n6. Logout\nChoice: ";
+                int c;
+                std::cin >> c;
 
-        else if (choice == 3)
-        {
-            std::string accNum;
-            double amount;
-
-            std::cout << "Enter account number: ";
-            std::cin >> accNum;
-
-            auto it = accounts.find(accNum);
-            if (it != accounts.end())
-            {
-                std::cout << "Enter withdrawal amount: ";
-                std::cin >> amount;
-                it->second.withdraw(amount);
-            }
-            else
-            {
-                std::cout << "Account not found!\n";
-            }
-        }
-
-        else if (choice == 4)
-        {
-            std::string accNum;
-            std::cout << "Enter account number: ";
-            std::cin >> accNum;
-
-            auto it = accounts.find(accNum);
-            if (it != accounts.end())
-            {
-                it->second.display();
-            }
-            else
-            {
-                std::cout << "Account not found!\n";
-            }
-        }
-
-        else if (choice == 5)
-        {
-            std::string accNum;
-            std::cout << "Enter account number: ";
-            std::cin >> accNum;
-
-            auto it = accounts.find(accNum);
-            if (it != accounts.end())
-            {
-                it->second.printTransactions();
-            }
-            else
-            {
-                std::cout << "Account not found!\n";
+                if (c == 1)
+                {
+                    double amt;
+                    std::cout << "Amount to deposit: ";
+                    std::cin >> amt;
+                    acc->deposit(amt);
+                    std::cout << "Deposited $" << amt << "!\n";
+                    std::cout << "New Balance: $" << acc->getBalance() << std::endl;
+                }
+                else if (c == 2)
+                {
+                    double amt;
+                    std::cout << "Amount to withdraw: ";
+                    std::cin >> amt;
+                    if (!acc->withdraw(amt))
+                        std::cout << "Insufficient funds\n";
+                    else
+                        std::cout << "Withdrew $" << amt << "!\n";
+                    std::cout << "New Balance: $" << acc->getBalance() << std::endl;
+                }
+                else if (c == 3)
+                {
+                    std::cout << "Balance: $" << acc->getBalance() << std::endl;
+                }
+                else if (c == 4)
+                {
+                    acc->printTransactions();
+                }
+                else if (c == 5)
+                {
+                    acc->clearTransactions();
+                    std::cout << "Transaction history cleared.\n";
+                }
+                else
+                {
+                    break;
+                }
             }
         }
-
-        else if (choice == 6)
-        {
-            std::cout << "Exiting program...\n";
-            break;
-        }
-
         else
         {
-            std::cout << "Invalid choice!\n";
+            bank.saveToFile();
+            break;
         }
     }
 

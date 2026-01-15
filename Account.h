@@ -4,42 +4,29 @@
 #include <string>
 #include <vector>
 
-// Transaction types
-enum class TransactionType
-{
-    Deposit,
-    Withdraw
-};
-
-// Transaction record
-struct Transaction
-{
-    TransactionType type;
-    double amount;
-    std::string timestamp;
-};
-
 class Account
 {
 private:
-    std::string accountNumber;
-    std::string name;
+    int accountNumber;
+    int pin;
     double balance;
-    std::vector<Transaction> transactions;
+    std::vector<std::string> transactions;
 
 public:
-    Account();
-    Account(const std::string &accNum, const std::string &accName, double initialBalance);
+    Account(int accNum, int pin, double balance = 0.0);
 
-    std::string getAccountNumber() const;
-    std::string getName() const;
+    int getAccountNumber() const;
+    bool verifyPin(int inputPin) const;
     double getBalance() const;
 
     void deposit(double amount);
     bool withdraw(double amount);
 
-    void display() const;
     void printTransactions() const;
+    void clearTransactions();
+
+    std::string serialize() const;
+    static Account deserialize(const std::string &line);
 };
 
 #endif
