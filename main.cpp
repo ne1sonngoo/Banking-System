@@ -34,7 +34,7 @@ int main()
             std::cout << "\nWelcome, Account #" << acc->getAccountNumber() << "!\n";
             while (true)
             {
-                std::cout << "\n1. Deposit\n2. Withdraw\n3. Balance\n4. Transactions\n5. Clear Transactions\n6. Logout\nChoice: ";
+                std::cout << "\n1. Deposit\n2. Withdraw\n3. Balance\n4. Transactions\n5. Clear Transactions\n6. Transfer\n7. Logout\nChoice: ";
                 int c;
                 std::cin >> c;
 
@@ -70,6 +70,22 @@ int main()
                 {
                     acc->clearTransactions();
                     std::cout << "Transaction history cleared.\n";
+                }
+                else if (c == 6)
+                {
+                    int targetAcc;
+                    double amt;
+
+                    std::cout << "Transfer to account #: ";
+                    std::cin >> targetAcc;
+
+                    std::cout << "Amount: ";
+                    std::cin >> amt;
+
+                    if (bank.transfer(acc, targetAcc, amt))
+                        std::cout << "Transfer successful.\n";
+                    else
+                        std::cout << "Transfer failed.\n";
                 }
                 else
                 {

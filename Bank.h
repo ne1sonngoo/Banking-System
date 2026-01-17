@@ -12,6 +12,7 @@ private:
 public:
     void loadFromFile();
     void saveToFile() const;
+    bool transfer(Account *from, int toAccountNumber, double amount);
 
     void createAccount();
     Account *authenticate(int accNum, int pin);

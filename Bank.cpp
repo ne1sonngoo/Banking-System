@@ -1,6 +1,7 @@
 #include "Bank.h"
 #include <fstream>
 #include <iostream>
+#include "Utils.h"
 
 void Bank::loadFromFile()
 {
@@ -44,4 +45,33 @@ Account *Bank::authenticate(int accNum, int pin)
         }
     }
     return nullptr;
+}
+
+bool Bank::transfer(Account *from, int toAccountNumber, double amount)
+{
+    if (amount <= 0)
+        return false;
+
+    for (auto &to : accounts)
+    {
+        if (to.getAccountNumber() == toAccountNumber)
+        {
+            if (!from->withdraw(amount))
+                return false;
+
+            to.deposit(amount);
+
+            from->addTransaction(
+                "Transferred $" + formatMoney(amount) +
+                " to Account #" + std::to_string(toAccountNumber));
+
+            to.addTransaction(
+                "Received $" + formatMoney(amount) +
+                " from Account #" + std::to_string(from->getAccountNumber()));
+
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -18,6 +18,7 @@ public:
     int getAccountNumber() const;
     bool verifyPin(int inputPin) const;
     double getBalance() const;
+    void addTransaction(const std::string &message);
 
     void deposit(double amount);
     bool withdraw(double amount);

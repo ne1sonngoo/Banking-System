@@ -1,6 +1,7 @@
 #include "Account.h"
 #include <iostream>
 #include <sstream>
+#include "Utils.h"
 
 Account::Account(int accNum, int pin, double balance)
     : accountNumber(accNum), pin(pin), balance(balance) {}
@@ -28,7 +29,12 @@ void Account::clearTransactions()
 void Account::deposit(double amount)
 {
     balance += amount;
-    transactions.push_back("Deposited: $" + std::to_string(amount));
+    transactions.push_back("Deposited: $" + formatMoney(amount));
+}
+
+void Account::addTransaction(const std::string &message)
+{
+    transactions.push_back(message);
 }
 
 bool Account::withdraw(double amount)
@@ -36,7 +42,7 @@ bool Account::withdraw(double amount)
     if (amount > balance)
         return false;
     balance -= amount;
-    transactions.push_back("Withdrew: $" + std::to_string(amount));
+    transactions.push_back("Withdrew: $" + formatMoney(amount));
     return true;
 }
 
