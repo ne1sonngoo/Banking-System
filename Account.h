@@ -12,22 +12,25 @@ private:
     double balance;
     std::vector<std::string> transactions;
 
-public:
-    Account(int accNum, int pin, double balance = 0.0);
+    std::string formatMoney(double amount) const;
+    void addTransaction(const std::string &entry);
 
-    int getAccountNumber() const;
-    bool verifyPin(int inputPin) const;
-    double getBalance() const;
-    void addTransaction(const std::string &message);
+public:
+    Account(int accNum, int pinCode, double initialBalance = 0.0);
+    void clearTransactions();
+    bool verifyPin(int enteredPin) const;
 
     void deposit(double amount);
     bool withdraw(double amount);
+    bool transfer(Account &to, double amount);
+
+    double getBalance() const;
+    int getAccountNumber() const;
 
     void printTransactions() const;
-    void clearTransactions();
 
     std::string serialize() const;
-    static Account deserialize(const std::string &line);
+    static Account deserialize(const std::string &data);
 };
 
 #endif

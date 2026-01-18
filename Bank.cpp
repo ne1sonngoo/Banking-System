@@ -60,15 +60,7 @@ bool Bank::transfer(Account *from, int toAccountNumber, double amount)
                 return false;
 
             to.deposit(amount);
-
-            from->addTransaction(
-                "Transferred $" + formatMoney(amount) +
-                " to Account #" + std::to_string(toAccountNumber));
-
-            to.addTransaction(
-                "Received $" + formatMoney(amount) +
-                " from Account #" + std::to_string(from->getAccountNumber()));
-
+            return from->transfer(to, amount);
             return true;
         }
     }

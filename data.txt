@@ -1,2 +1,2 @@
-123,1234,2030,Deposited: $2000.000000,Withdrew: $20.000000,Withdrew: $20.000000,Deposited: $20.000000,Deposited: $20.000000,Withdrew: $20.000000,Deposited: $50.000000,Received $50.000000 from Account #1234
-1234,123,200,Deposited: $250.000000,Withdrew: $50.000000,Transferred $50.000000 to Account #123
+123,1234,1951,Withdrew $20.00,Sent $20.00 to Account #1234,Withdrew $40.00,Deposited $1.00
+1234,123,240,Deposited: $250.000000,Withdrew: $50.000000,Transferred $50.000000 to Account #123,Deposited $20.00,Received $20.00 from Account #123
