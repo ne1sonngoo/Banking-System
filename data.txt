@@ -1,2 +1,2 @@
-123,1234,1951,Withdrew $20.00,Sent $20.00 to Account #1234,Withdrew $40.00,Deposited $1.00
-1234,123,240,Deposited: $250.000000,Withdrew: $50.000000,Transferred $50.000000 to Account #123,Deposited $20.00,Received $20.00 from Account #123
+123,1234,1905,[2026-01-17 21:44:25] Deposited $20.00,[2026-01-17 21:44:27] Withdrew $15.00,[2026-01-17 21:44:33] Sent $10.00 to Account #1234
+1234,123,290,Deposited: $250.000000,Withdrew: $50.000000,Transferred $50.000000 to Account #123,Deposited $20.00,Received $20.00 from Account #123,[2026-01-17 21:39:31] Deposited $20.00,[2026-01-17 21:39:31] Received $20.00 from Account #123,[2026-01-17 21:44:33] Received $10.00 from Account #123

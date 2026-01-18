@@ -59,6 +59,10 @@ int Account::getAccountNumber() const
 void Account::addTransaction(const std::string &entry)
 {
     std::string timestampedEntry = "[" + currentTimestamp() + "] " + entry;
+    if (transactions.size() >= 10)
+    {
+        transactions.erase(transactions.begin());
+    }
     transactions.push_back(timestampedEntry);
 }
 
@@ -81,6 +85,7 @@ std::string Account::serialize() const
 {
     std::ostringstream oss;
     oss << accountNumber << "," << pin << "," << balance;
+
     for (const auto &t : transactions)
     {
         oss << "," << t;
@@ -93,12 +98,16 @@ Account Account::deserialize(const std::string &data)
     std::stringstream ss(data);
     std::string token;
 
-    getline(ss, token, ',');
+    // Extract Account Number
+    if (!getline(ss, token, ','))
+        return Account(0, 0);
     int accNum = std::stoi(token);
 
+    // Extract PIN
     getline(ss, token, ',');
     int pinCode = std::stoi(token);
 
+    // Extract Balance
     getline(ss, token, ',');
     double bal = std::stod(token);
 
@@ -106,7 +115,10 @@ Account Account::deserialize(const std::string &data)
 
     while (getline(ss, token, ','))
     {
-        acc.transactions.push_back(token);
+        if (!token.empty())
+        {
+            acc.transactions.push_back(token);
+        }
     }
 
     return acc;

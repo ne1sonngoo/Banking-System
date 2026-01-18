@@ -56,14 +56,8 @@ bool Bank::transfer(Account *from, int toAccountNumber, double amount)
     {
         if (to.getAccountNumber() == toAccountNumber)
         {
-            if (!from->withdraw(amount))
-                return false;
-
-            to.deposit(amount);
             return from->transfer(to, amount);
-            return true;
         }
     }
-
     return false;
 }
