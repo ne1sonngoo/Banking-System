@@ -32,6 +32,24 @@ void Account::clearTransactions()
     transactions.clear();
 }
 
+void Account::searchTransactions(const std::string &query) const
+{
+    bool found = false;
+    std::cout << "--- Search Results for '" << query << "' ---\n";
+    for (const auto &t : transactions)
+    {
+        if (t.find(query) != std::string::npos)
+        {
+            std::cout << t << std::endl;
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        std::cout << "No transactions matching that query.\n";
+    }
+}
+
 bool Account::transfer(Account &to, double amount)
 {
     if (amount > balance)

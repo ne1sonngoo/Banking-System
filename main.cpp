@@ -34,7 +34,7 @@ int main()
             std::cout << "\nWelcome, Account #" << acc->getAccountNumber() << "!\n";
             while (true)
             {
-                std::cout << "\n1. Deposit\n2. Withdraw\n3. Balance\n4. Transactions\n5. Clear Transactions\n6. Transfer\n7. Logout\nChoice: ";
+                std::cout << "\n1. Deposit\n2. Withdraw\n3. Balance\n4. Transactions\n5. Clear Transactions\n6. Transfer\n7. Search Transactions\n8. Logout\nChoice: ";
                 int c;
                 std::cin >> c;
 
@@ -86,6 +86,14 @@ int main()
                         std::cout << "Transfer successful.\n";
                     else
                         std::cout << "Transfer failed.\n";
+                }
+                else if (c == 7)
+                {
+                    std::string query;
+                    std::cout << "Enter keyword or date (YYYY-MM-DD): ";
+                    std::cin.ignore();
+                    std::getline(std::cin, query);
+                    acc->searchTransactions(query);
                 }
                 else
                 {

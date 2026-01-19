@@ -15,6 +15,6 @@ Concepts
 How to run
 
 ```bash
-g++ main.cpp Account.cpp -o banking
+g++ main.cpp Account.cpp Bank.cpp -o banking.exe
 ./banking
 ```

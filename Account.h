@@ -19,7 +19,7 @@ public:
     Account(int accNum, int pinCode, double initialBalance = 0.0);
     void clearTransactions();
     bool verifyPin(int enteredPin) const;
-
+    void searchTransactions(const std::string &query) const;
     void deposit(double amount);
     bool withdraw(double amount);
     bool transfer(Account &to, double amount);
